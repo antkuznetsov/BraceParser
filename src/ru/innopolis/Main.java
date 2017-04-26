@@ -1,7 +1,5 @@
 package ru.innopolis;
 
-import java.beans.beancontext.BeanContext;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Main {
@@ -11,7 +9,7 @@ public class Main {
         //InputStream str = System.in;
         //System.out.println(str);
 
-        String str = "(){}";
+        String str = "{{[()]]";
 
         Stack stack = new Stack();
 
@@ -28,7 +26,8 @@ public class Main {
                     //Проверяем была ли она открыта
                     if (stack.tos < 0) {
 
-                        System.out.println("Не хватает открывающихся скобок");
+                        //System.out.println("Не хватает открывающихся скобок");
+                        System.out.print(i + 1);
                         return;
 
                     } else {
@@ -41,7 +40,8 @@ public class Main {
                                 (str.charAt(i) == ']' && b.type != '[') ||
                                 (str.charAt(i) == '}' && b.type != '{')
                                 ) {
-                            System.out.println("Баланс не соблюден");
+                            //System.out.println("Баланс не соблюден");
+                            System.out.print(i + 1);
                             return;
                         }
 
@@ -53,9 +53,9 @@ public class Main {
         }
         // Проверяем не осталось ли открытых скобок
         if (stack.tos < 0) {
-            System.out.println("Всё хорошо");
+            System.out.print("Success");
         } else {
-            System.out.println("Не хватает закрывающихся скобок");
+            System.out.print("Не хватает закрывающихся скобок");
         }
     }
 }
@@ -71,7 +71,7 @@ class Stack {
 
     void push(Brace item) {
         if (tos == 9) {
-            System.out.println("Стек заполнен");
+            System.out.print("Стек заполнен");
         } else {
             stck[++tos] = item;
         }
@@ -79,7 +79,7 @@ class Stack {
 
     Brace pop() {
         if (tos < 0) {
-            System.out.println("Стек не загружен");
+            System.out.print("Стек не загружен");
             return null;
         } else {
             return stck[tos--];
