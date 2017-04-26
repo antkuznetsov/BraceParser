@@ -2,6 +2,7 @@ package ru.innopolis;
 
 import java.beans.beancontext.BeanContext;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Main {
 
@@ -10,21 +11,16 @@ public class Main {
         //InputStream str = System.in;
         //System.out.println(str);
 
-        //String str = "([](){([])})";
-        String str = "()[]}";
+        String str = "()[]{}";
 
         Stack stack = new Stack();
 
-        /*
-        s1.push(3);
-        s1.push(10);
-        s1.push(16);
-        s1.push(1);
-        /s1.pop();
-        */
-
         for (int i = 0; i < str.length(); i++) {
 
+            Brace brace = new Brace(str.charAt(i), i);
+            stack.push(brace);
+
+            /*
             if (str.charAt(i) == '(' || str.charAt(i) == '[' || str.charAt(i) == '{') {
                 Brace brace = new Brace(str.charAt(i), i);
                 stack.push(brace);
@@ -35,18 +31,23 @@ public class Main {
                         (str.charAt(i) == ']' && b.type != '[') ||
                         (str.charAt(i) == '}' && b.type != '{')
                     ) {
-                    System.out.println(b.position);
-                    break;
+                    System.out.println(b.position+1);
                 }
-                System.out.println("Succes");
             }
-
+            */
         }
+        System.out.println(stack);
+
+        for (int i = 0; i < str.length(); i++) {
+            System.out.println(stack.pop());
+        }
+        System.out.println(stack.pop());
     }
 }
 
 class Stack {
-    Brace stck[] = new Brace[100];
+
+    Brace stck[] = new Brace[10];
     int tos;
 
     Stack() {
@@ -54,7 +55,7 @@ class Stack {
     }
 
     void push(Brace item) {
-        if (tos == 99) {
+        if (tos == 9) {
             System.out.println("Стек заполнен");
         } else {
             stck[++tos] = item;
@@ -63,10 +64,19 @@ class Stack {
 
     Brace pop() {
         if (tos < 0) {
-            return new Brace('x', -1);
+            System.out.println("Стек не загружен");
+            return null;
         } else {
             return stck[tos--];
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Stack{" +
+                "stck=" + Arrays.toString(stck) +
+                ", tos=" + tos +
+                '}';
     }
 }
 
