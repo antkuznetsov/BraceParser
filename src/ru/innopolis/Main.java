@@ -11,37 +11,52 @@ public class Main {
         //InputStream str = System.in;
         //System.out.println(str);
 
-        String str = "()[]{}";
+        String str = "(){}";
 
         Stack stack = new Stack();
 
         for (int i = 0; i < str.length(); i++) {
 
-            Brace brace = new Brace(str.charAt(i), i);
-            stack.push(brace);
-
-            /*
             if (str.charAt(i) == '(' || str.charAt(i) == '[' || str.charAt(i) == '{') {
-                Brace brace = new Brace(str.charAt(i), i);
-                stack.push(brace);
-            } else {
-                Brace b = stack.pop();
-                if (
-                        (str.charAt(i) == ')' && b.type != '(') ||
-                        (str.charAt(i) == ']' && b.type != '[') ||
-                        (str.charAt(i) == '}' && b.type != '{')
-                    ) {
-                    System.out.println(b.position+1);
-                }
-            }
-            */
-        }
-        System.out.println(stack);
 
-        for (int i = 0; i < str.length(); i++) {
-            System.out.println(stack.pop());
+                stack.push(new Brace(str.charAt(i), i)); // Если символ это скобка, кладем его в стек
+
+            } else {
+                // Если символ это скобка
+                if (str.charAt(i) == ')' || str.charAt(i) == ']' || str.charAt(i) == '}') {
+
+                    //Проверяем была ли она открыта
+                    if (stack.tos < 0) {
+
+                        System.out.println("Не хватает открывающихся скобок");
+                        return;
+
+                    } else {
+
+                        Brace b = stack.pop();
+
+                        //Проверяем тип открывающей скобки
+                        if (
+                                (str.charAt(i) == ')' && b.type != '(') ||
+                                (str.charAt(i) == ']' && b.type != '[') ||
+                                (str.charAt(i) == '}' && b.type != '{')
+                                ) {
+                            System.out.println("Баланс не соблюден");
+                            return;
+                        }
+
+                    }
+
+                }
+
+            }
         }
-        System.out.println(stack.pop());
+        // Проверяем не осталось ли открытых скобок
+        if (stack.tos < 0) {
+            System.out.println("Всё хорошо");
+        } else {
+            System.out.println("Не хватает закрывающихся скобок");
+        }
     }
 }
 
