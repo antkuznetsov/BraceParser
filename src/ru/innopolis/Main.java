@@ -1,15 +1,17 @@
 package ru.innopolis;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        //InputStream str = System.in;
-        //System.out.println(str);
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-        String str = "{{[()]]";
+        String str = in.readLine(); // Читаем текст из консоли
 
         Stack stack = new Stack();
 
@@ -37,8 +39,8 @@ public class Main {
                         //Проверяем тип открывающей скобки
                         if (
                                 (str.charAt(i) == ')' && b.type != '(') ||
-                                (str.charAt(i) == ']' && b.type != '[') ||
-                                (str.charAt(i) == '}' && b.type != '{')
+                                        (str.charAt(i) == ']' && b.type != '[') ||
+                                        (str.charAt(i) == '}' && b.type != '{')
                                 ) {
                             //System.out.println("Баланс не соблюден");
                             System.out.print(i + 1);
@@ -55,7 +57,8 @@ public class Main {
         if (stack.tos < 0) {
             System.out.print("Success");
         } else {
-            System.out.print("Не хватает закрывающихся скобок");
+            //System.out.print("Не хватает закрывающихся скобок");
+            System.out.print(stack.pop().position + 1);
         }
     }
 }
